@@ -5,6 +5,8 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:chat_stream/model.dart';
 import 'package:chat_stream/utils.dart';
 
+import 'package:intl/intl.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -32,12 +34,13 @@ class MyHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Stream Chat App"),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.blue[400],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        //mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Expanded(
+          Container(
+            padding: EdgeInsets.only(top: 30.0),
             child: Hero(
               tag: 'logo',
               child: Container(
@@ -118,7 +121,7 @@ class ChannelView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Channel List"),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.blue[800],
         leading: Hero(
           tag: 'logo',
           child: Container(
@@ -127,7 +130,7 @@ class ChannelView extends StatelessWidget {
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        //mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
             child: FutureBuilder(
@@ -208,6 +211,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final streamChannel = StreamChannel.of(context);
     final channel = streamChannel.channel;
+    final df = new DateFormat('dd-MM-yyyy hh:mm a');
 
     return Scaffold(
       appBar: ChannelHeader(),
@@ -217,14 +221,41 @@ class ChatPage extends StatelessWidget {
             child: MessageListView(
               messageBuilder: (context, msg, idx) {
                 final msgReactionCount = msg.reactionCounts ?? {"like": 0};
-                return ListTile(
-                  leading: Text("${msg.user.name}"),
-                  title: Text("${msg.text}"),
-                  subtitle: Text("${msg.createdAt.toIso8601String()}"),
-                  trailing: Text("Likes: ${msgReactionCount["like"] ?? 0}"),
-                  onTap: () async {
-                    await channel.sendReaction(msg.id, "like");
-                  },
+                return Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        color: Colors.grey[100],
+                        child: ListTile(
+                          leading: Text("${msg.user.name}"),
+                          title: Text("${msg.text}"),
+                          subtitle: Text(msg.createdAt.toString()),
+                          trailing: Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.thumb_up,
+                                  color: Colors.blue[300],
+                                ),
+                                Text(
+                                  "${msgReactionCount["like"] ?? 0}",
+                                  style: TextStyle(fontSize: 8.0),
+                                ),
+                              ],
+                            ),
+                          ),
+                          onTap: () async {
+                            await channel.sendReaction(msg.id, "like");
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    )
+                  ],
                 );
               },
             ),

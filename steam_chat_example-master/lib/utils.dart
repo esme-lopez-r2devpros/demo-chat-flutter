@@ -18,24 +18,27 @@ class CustomForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: TextFormField(
-        controller: controller,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: hintText,
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: Form(
+        key: formKey,
+        child: TextFormField(
+          controller: controller,
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: hintText,
+          ),
+          validator: (input) {
+            if (input.isEmpty) {
+              return "Enter some Text";
+            }
+            if (input.contains(RegExp(r"^([A-Za-z0-9]){4,20}$"))) {
+              return null;
+            }
+            return "Can not contain special characters or spaces.";
+          },
         ),
-        validator: (input) {
-          if (input.isEmpty) {
-            return "Enter some Text";
-          }
-          if (input.contains(RegExp(r"^([A-Za-z0-9]){4,20}$"))) {
-            return null;
-          }
-          return "Can not contain special characters or spaces.";
-        },
       ),
     );
   }
@@ -56,7 +59,7 @@ class CustomButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Material(
-        color: Colors.blueGrey,
+        color: Colors.lightBlue[900],
         elevation: 6.0,
         borderRadius: BorderRadius.circular(30.0),
         child: MaterialButton(
