@@ -220,7 +220,7 @@ class ChatPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: MessageListView(),
+            child: Expanded(child: MessageListView()),
           ),
           MessageInput(),
         ],
