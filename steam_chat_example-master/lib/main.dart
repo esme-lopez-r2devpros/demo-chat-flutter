@@ -218,47 +218,7 @@ class ChatPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: MessageListView(
-              messageBuilder: (context, msg, idx) {
-                final msgReactionCount = msg.reactionCounts ?? {"like": 0};
-                return Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        color: Colors.grey[100],
-                        child: ListTile(
-                          leading: Text("${msg.user.name}"),
-                          title: Text("${msg.text}"),
-                          subtitle: Text(msg.createdAt.toString()),
-                          trailing: Container(
-                            margin: EdgeInsets.only(top: 10.0),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.thumb_up,
-                                  color: Colors.blue[300],
-                                ),
-                                Text(
-                                  "${msgReactionCount["like"] ?? 0}",
-                                  style: TextStyle(fontSize: 8.0),
-                                ),
-                              ],
-                            ),
-                          ),
-                          onTap: () async {
-                            await channel.sendReaction(msg.id, "like");
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    )
-                  ],
-                );
-              },
-            ),
+            child: MessageListView(),
           ),
           MessageInput(),
         ],
