@@ -36,15 +36,16 @@ class MyHome extends StatelessWidget {
         title: Text("Stream Chat App"),
         backgroundColor: Colors.blue[400],
       ),
-      body: Column(
-        //mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
+        shrinkWrap: true,
+        padding: EdgeInsets.all(15.0),
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(top: 30.0),
             child: Hero(
               tag: 'logo',
               child: Container(
-                width: 200.0,
+                width: 50.0,
                 child: Image.asset("images/logo.png"),
               ),
             ),
@@ -129,7 +130,8 @@ class ChannelView extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
+        padding: EdgeInsets.only(top: 150.0),
         //mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
