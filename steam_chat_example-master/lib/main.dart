@@ -63,7 +63,7 @@ class MyHome extends StatelessWidget {
 
                 await client.setUserWithProvider(
                   User(
-                    id: "id_$user",
+                    id: "$user",
                     extraData: {
                       "name": "$user",
                       "image": "https://picsum.photos/100/100",
@@ -97,7 +97,7 @@ class ChannelView extends StatelessWidget {
   Future<List<Channel>> getChannels(StreamChatState state) async {
     final filter = {
       "type": "mobile",
-      "members": ['esmelopez', 'chdsz123'],
+     // "members": ['esmelopez'],
     };
 
     final sort = [
@@ -130,9 +130,9 @@ class ChannelView extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
-        padding: EdgeInsets.only(top: 150.0),
-        //mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        //padding: EdgeInsets.only(top: 150.0),
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
             child: FutureBuilder(
@@ -143,6 +143,7 @@ class ChannelView extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   );
                 }
+
 
                 // clear list to avoid duplicates
                 channels.clear();
@@ -169,20 +170,29 @@ class ChannelView extends StatelessWidget {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 final channelName = _controller.value.text;
-                final channelTitles = channels.map((e) => e.cid).toList();
+
 
                 _controller.clear();
 
-                final channel = client.channel(
-                  "mobile",
-                  id: channelName,
-                  extraData: {
-                    "image": "https://picsum.photos/100/100",
-                  },
-                );
+               // final channel = client.channel(
+                 // "mobile",
+                 // id: channelName,
+                 // extraData: {
+                 //   "members": ["esmelopez", "chdsz123"],
+                   // "image": "https://picsum.photos/100/100",
+                 // },
+                //);
+
+                final channel =
+                client.channel("mobile", extraData: {"members": ["esmelopez", "chdsz123"]});
+
 
                 // match against strings where pattern = mobile:*
-                if (!channelTitles.contains("mobile:$channelName")) {
+                /*if (!channelTitles.contains("mobile:$channelName")) {
+                  await channel.create();
+                }*/
+                final channelTitles = channels.map((e) => e.cid).toList();
+                if (!channelTitles.contains(channelName)) {
                   await channel.create();
                 }
 

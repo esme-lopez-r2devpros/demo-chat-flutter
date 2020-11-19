@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 import 'package:chat_stream/model.dart';
 
+import 'main.dart';
+
 class CustomForm extends StatelessWidget {
   final String hintText;
   final GlobalKey formKey;
@@ -76,6 +78,7 @@ class CustomButton extends StatelessWidget {
 List<Widget> createListOfChannels(List<Channel> channels, context) {
   final provider = Provider.of<ChatModel>(context);
 
+
   return channels
       // convert to list to gain access to the index and make deletion more reliable.
       .asMap()
@@ -83,12 +86,14 @@ List<Widget> createListOfChannels(List<Channel> channels, context) {
           idx,
           ListTile(
             // unique key makes it easier for the streamview to know which ListTile is which.
+
             key: UniqueKey(),
             title: Text(
               "Channel Title: ${chan.cid.replaceFirstMapped("mobile:", (match) => "")}",
             ),
-            subtitle: Text("Last Message at: ${chan.lastMessageAt}"),
-            trailing: Text("Peers: ${chan.state.members.length}"),
+            subtitle:
+            Text("Last Message: ${chan.lastMessageAt}"),
+            //trailing: Text("Peers: ${chan.state.members.length}"),
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
                   chan.extraData["image"] ?? "https://picsum.photos/100/100"),
@@ -96,9 +101,22 @@ List<Widget> createListOfChannels(List<Channel> channels, context) {
             onLongPress: () async {
               // remove channel from list.
               channels.removeAt(idx);
-              provider.currentChannel = chan;
-              await chan.delete();
+            provider.currentChannel = chan;
+            await chan.delete();
             },
+            onTap: () async {
+           // remove channel from list.
+
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => StreamChannel(
+                    child: ChatPage(),
+                    channel: chan,
+                  ),
+                ),
+              );
+            },
+
           )))
       .values
       .toList();
