@@ -5,7 +5,6 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:chat_stream/model.dart';
 import 'package:chat_stream/utils.dart';
 
-import 'package:intl/intl.dart';
 
 void main() => runApp(MyApp());
 
@@ -174,17 +173,17 @@ class ChannelView extends StatelessWidget {
 
                 _controller.clear();
 
-               // final channel = client.channel(
-                 // "mobile",
-                 // id: channelName,
-                 // extraData: {
-                 //   "members": ["esmelopez", "chdsz123"],
-                   // "image": "https://picsum.photos/100/100",
-                 // },
-                //);
+                final channel = client.channel(
+                 "mobile",
+                  id: channelName,
+                  extraData: {
 
-                final channel =
-                client.channel("mobile", extraData: {"members": ["esmelopez", "chdsz123"]});
+                  "image": "https://picsum.photos/100/100",
+                  },
+                );
+
+               // final channel =
+                //client.channel("mobile", extraData: {"members": ["esmelopez", "chdsz123"]});
 
 
                 // match against strings where pattern = mobile:*
