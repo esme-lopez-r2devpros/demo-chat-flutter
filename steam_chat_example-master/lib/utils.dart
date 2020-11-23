@@ -1,3 +1,4 @@
+import 'package:chat_stream/pages/ChatPage.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:provider/provider.dart';
