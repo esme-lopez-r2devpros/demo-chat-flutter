@@ -19,7 +19,7 @@ class ChannelView extends StatelessWidget {
   Future<List<Channel>> getChannels(StreamChatState state, User user ) async {
     final filter = {
       "type": "mobile",
-     "members": [user],
+    // "members": [user],
     };
 
     final sort = [
@@ -88,7 +88,7 @@ class ChannelView extends StatelessWidget {
 
                 return ListView(
                   scrollDirection: Axis.vertical,
-                  children: createListOfChannels(snapshot.data, context),
+                children: createListOfChannels(snapshot.data, context),
                 );
               },
             ),

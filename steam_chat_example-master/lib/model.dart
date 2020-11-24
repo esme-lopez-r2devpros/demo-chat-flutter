@@ -38,5 +38,6 @@ Future<String> provider(String id) async {
     "user_id": id,
   };
 
-  return jwt.encode(payload);
+  return  jwt.encode(payload);
+
 }
