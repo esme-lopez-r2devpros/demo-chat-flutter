@@ -49,23 +49,23 @@ class MyHome extends StatelessWidget {
                 //FOUR RESIDENTS WERE CREATED TO MAKE EXAMPLES
 
                 final resident1=new Resident();
-                resident1.NickName="pa";
+                resident1.NickName="Dad";
                 resident1.UserId="idesme";
                 resident1.Image="https://pickaface.net/gallery/avatar/unr_grandpa_180927_0611_13iq.png";
 
 
                 final resident2=new Resident();
-                resident2.NickName="grandma";
+                resident2.NickName="Gina";
                 resident2.UserId="idesme";
                 resident2.Image="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png";
 
                 final resident3=new Resident();
-                resident3.NickName="grandpa";
+                resident3.NickName="Bob";
                 resident3.UserId="idchris";
                 resident3.Image="https://thumbs.dreamstime.com/b/grandfather-avatar-character-icon-illustration-design-84942735.jpg";
 
                 final resident4=new Resident();
-                resident4.NickName="Tia";
+                resident4.NickName="Mary";
                 resident4.UserId="idarturo";
                 resident4.Image="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1807/yupiramos180788706.jpg";
 
