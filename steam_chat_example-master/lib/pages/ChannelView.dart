@@ -13,13 +13,13 @@ class ChannelView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final channels = List<Channel>();
   List<Resident> residents =List<Resident>();
-
+  final user;
 
 
   Future<List<Channel>> getChannels(StreamChatState state, User user ) async {
     final filter = {
       "type": "mobile",
-   //   "members": ['$user'],
+     "members": [user],
     };
 
     final sort = [
@@ -34,7 +34,7 @@ class ChannelView extends StatelessWidget {
       sort: sort,
     );
   }
-  ChannelView({@required this.residents, });
+  ChannelView({@required this.residents, @required this.user });
   @override
   Widget build(BuildContext context) {
     final streamchat = StreamChat.of(context);
@@ -56,7 +56,7 @@ class ChannelView extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.add),
               onPressed: (){
-                Route route =MaterialPageRoute(builder: (bc) => ContactosPage(context: context, residents: this.residents, user: user, channels: channels,));
+                Route route =MaterialPageRoute(builder: (bc) => ContactosPage(context: context, residents: this.residents, user: user, ));
                 Navigator.of(context).pushReplacement(route);
               }
           )

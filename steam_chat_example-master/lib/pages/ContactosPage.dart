@@ -10,9 +10,9 @@ class ContactosPage extends StatelessWidget {
 
   final BuildContext context;
   final List<Resident> residents ;
-  final List<Channel> channels ;
+  final List<Channel> channels =new List<Channel>() ;
 
-  ContactosPage({@required this.context, @required this.residents, @required this.user, @required this.channels});
+  ContactosPage({@required this.context, @required this.residents, @required this.user, });
   final user;
 
   List<Resident> filter =List<Resident>();
@@ -36,6 +36,7 @@ class ContactosPage extends StatelessWidget {
     getContacts();
    return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue[800],
           leading: IconButton(icon: Icon(Icons.arrow_back_ios),
           onPressed: (){
             Navigator.pop(context);
@@ -56,12 +57,29 @@ class ContactosPage extends StatelessWidget {
        itemBuilder: (context, index)
        {
         return  ListTile(
+
            title: Text('${filter[index].NickName}'),
-           onLongPress: () async {
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(
+                  filter[index].Image ),
+            ),
+           onTap: () async {
              final channelName = filter[index].NickName;
 
-              final channel =client.channel("mobile", extraData: {"members": ["esme", filter[index].NickName]});
-             // match against strings where pattern = mobile:*
+             final user2=
+               User(
+                 id: "id${filter[index].NickName}",
+                 extraData: {
+                   "name": filter[index].NickName,
+                   "image": filter[index].Image,
+                 },
+               );
+
+
+              final channel =
+              client.channel("mobile", extraData: {"members": ["${user.id}", "${user2.id}"]});
+
+             // match against strings where pattern = mobile:* extraData: {"members": ["esme", "chris"]}
 
              final channelTitles = channels.map((e) => e.cid).toList();
              if (!channelTitles.contains(channelName)) {

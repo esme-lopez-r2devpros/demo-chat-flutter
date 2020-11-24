@@ -51,30 +51,40 @@ class MyHome extends StatelessWidget {
                 final resident1=new Resident();
                 resident1.NickName="pa";
                 resident1.UserId="idesme";
+                resident1.Image="https://pickaface.net/gallery/avatar/unr_grandpa_180927_0611_13iq.png";
 
 
                 final resident2=new Resident();
                 resident2.NickName="grandma";
                 resident2.UserId="idesme";
+                resident2.Image="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png";
 
                 final resident3=new Resident();
                 resident3.NickName="grandpa";
                 resident3.UserId="idchris";
+                resident3.Image="https://thumbs.dreamstime.com/b/grandfather-avatar-character-icon-illustration-design-84942735.jpg";
 
                 final resident4=new Resident();
                 resident4.NickName="Tia";
-                resident4.UserId="idsalma";
+                resident4.UserId="idarturo";
+                resident4.Image="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1807/yupiramos180788706.jpg";
+
+                final resident5=new Resident();
+                resident5.NickName="Anne";
+                resident5.UserId="idchris";
+                resident5.Image="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1807/yupiramos180788706.jpg";
 
                 final Residents= List<Resident>();
                 Residents.add(resident1);
                 Residents.add(resident2);
                 Residents.add(resident3);
                 Residents.add(resident4);
+                Residents.add(resident5);
 
                 final currentUser=new Sesion();
                 currentUser.userId="id$user";
 
-                await client.setUserWithProvider(
+              final u=  await client.setUserWithProvider(
                   User(
                     id: currentUser.userId,
                     extraData: {
@@ -87,7 +97,7 @@ class MyHome extends StatelessWidget {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (_) => StreamChat(
-                      child: ChannelView(residents: Residents),
+                      child: ChannelView(residents: Residents, user: u ,),
                       client: client,
                     ),
                   ),
