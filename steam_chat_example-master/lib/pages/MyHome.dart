@@ -50,28 +50,28 @@ class MyHome extends StatelessWidget {
 
                 final resident1=new Resident();
                 resident1.NickName="Dad";
-                resident1.UserId="idesme";
+                resident1.userId="idesme";
                 resident1.Image="https://pickaface.net/gallery/avatar/unr_grandpa_180927_0611_13iq.png";
 
 
                 final resident2=new Resident();
                 resident2.NickName="Gina";
-                resident2.UserId="idesme";
+                resident2.userId="idesme";
                 resident2.Image="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png";
 
                 final resident3=new Resident();
                 resident3.NickName="Bob";
-                resident3.UserId="idchris";
+                resident3.userId="idchris123";
                 resident3.Image="https://thumbs.dreamstime.com/b/grandfather-avatar-character-icon-illustration-design-84942735.jpg";
 
                 final resident4=new Resident();
                 resident4.NickName="Mary";
-                resident4.UserId="idarturo";
+                resident4.userId="idarturo";
                 resident4.Image="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1807/yupiramos180788706.jpg";
 
                 final resident5=new Resident();
                 resident5.NickName="Anne";
-                resident5.UserId="idchris";
+                resident5.userId="idchdsz123";
                 resident5.Image="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1807/yupiramos180788706.jpg";
 
                 final Residents= List<Resident>();
@@ -80,6 +80,15 @@ class MyHome extends StatelessWidget {
                 Residents.add(resident3);
                 Residents.add(resident4);
                 Residents.add(resident5);
+
+                User user2=new User(
+                  id: "idDad",
+                  extraData:{
+                    "name": "Dad",
+                  }
+                );
+
+
 
                 final currentUser=new Sesion();
                 currentUser.userId="id$user";
@@ -94,10 +103,13 @@ class MyHome extends StatelessWidget {
                   ),
                 );
 
+
+
+
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (_) => StreamChat(
-                      child: ChannelView(residents: Residents, user: u ,),
+                      child: ChannelView(residents: Residents, user: u, user2: user2,),
                       client: client,
                     ),
                   ),

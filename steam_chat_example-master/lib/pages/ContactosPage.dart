@@ -8,12 +8,14 @@ import 'package:chat_stream/pages/ChatPage.dart';
 
 class ContactosPage extends StatelessWidget {
 
-  final BuildContext context;
+  //final BuildContext context;
   final List<Resident> residents ;
   final List<Channel> channels =new List<Channel>() ;
 
-  ContactosPage({@required this.context, @required this.residents, @required this.user, });
-  final user;
+  User user2 ;
+
+  ContactosPage({ @required this.residents, @required this.user, @required this.user2 });
+  final user ;
 
   List<Resident> filter =List<Resident>();
   void  getContacts()
@@ -21,7 +23,7 @@ class ContactosPage extends StatelessWidget {
   filter.clear();
     for(var x in residents)
     {
-      if(x.UserId==user.id) {
+      if(x.userId==user.id) {
         filter.add(x);
       }
     }
@@ -39,7 +41,7 @@ class ContactosPage extends StatelessWidget {
           backgroundColor: Colors.blue[800],
           leading: IconButton(icon: Icon(Icons.arrow_back_ios),
           onPressed: (){
-            Navigator.pop(context);
+
           }
           ),
           title: Text("Contactos"),
@@ -66,18 +68,22 @@ class ContactosPage extends StatelessWidget {
            onTap: () async {
              final channelName = filter[index].NickName;
 
-             final user2=
+
+
+
+
+             /*final user2=
                User(
                  id: "id${filter[index].NickName}",
                  extraData: {
                    "name": filter[index].NickName,
                    "image": filter[index].Image,
                  },
-               );
+               );*/
 
 
               final channel =
-              client.channel("mobile", extraData: {"members": ["${user.id}", "${user2.id}"]});
+              client.channel("mobile", extraData: {"members" : [ user2.id, user.id]} );
 
              // match against strings where pattern = mobile:* extraData: {"members": ["esme", "chris"]}
 
@@ -104,9 +110,6 @@ class ContactosPage extends StatelessWidget {
    ),
 
     );
-
-
-
   }
 
 }

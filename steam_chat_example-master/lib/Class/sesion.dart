@@ -15,12 +15,12 @@ class  Sesion{
 }
 
 class Resident{
-  String UserId;
+  String userId;
   String NickName;
   String Image;
 
   Resident({
-    this.UserId,
+    this.userId,
     this.NickName,
     this.Image
   });
