@@ -1,49 +1,27 @@
-import 'package:chat_stream/pages/ContactosPage.dart';
+import 'package:chat_stream/pages/contactsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:chat_stream/model.dart';
 import 'package:chat_stream/utils.dart';
-import 'package:intl/intl.dart';
-import 'package:chat_stream/Class/sesion.dart';
+import 'package:chat_stream/Class/session.dart';
 
-
-class ChannelView extends StatelessWidget {
+class ChannelListPage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   final channels = List<Channel>();
-  List<Resident> residents =List<Resident>();
-  final user;
+  final List<Resident> residents;
 
-  User user2=  User( );
+  ChannelListPage({@required this.residents});
 
-
-  Future<List<Channel>> getChannels(StreamChatState state, User user ) async {
-    final filter = {
-      "type": "mobile",
-     "members": ["idesme"],
-    };
-
-    //Revisar
-    final sort = [
-      SortOption(
-        "last_message_at",
-        direction: SortOption.DESC,
-      ),
-    ];
-
-    return await state.client.queryChannels(
-      filter: filter,
-      sort: sort,
-    );
-  }
-  ChannelView({@required this.residents, @required this.user, @required this.user2 });
   @override
   Widget build(BuildContext context) {
-    final streamchat = StreamChat.of(context);
-    final user =streamchat.user;
-    final client = streamchat.client;
-    final provider = Provider.of<ChatModel>(context);
+
+    //final user = streamchat.user;
+
+    // final client = streamchat.client;
+    // final provider = Provider.of<ChatModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -55,14 +33,15 @@ class ChannelView extends StatelessWidget {
             child: Image.asset("images/logo.png"),
           ),
         ),
-        actions:[
+        actions: [
           IconButton(
               icon: Icon(Icons.add),
-              onPressed: (){
-                Route route =MaterialPageRoute(builder: (bc) => ContactosPage( residents: this.residents, user: user, user2: user2 ));
+              onPressed: () {
+                Route route = MaterialPageRoute(
+                    builder: (bc) => ContactsPage(
+                        residents: this.residents));
                 Navigator.of(context).pushReplacement(route);
-              }
-          )
+              })
         ],
       ),
       body: Column(
@@ -71,14 +50,13 @@ class ChannelView extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: FutureBuilder(
-              future: getChannels(streamchat, user),
+              future: getChannels(context),
               builder: (_, AsyncSnapshot<List<Channel>> snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 }
-
 
                 // clear list to avoid duplicates
                 channels.clear();
@@ -91,13 +69,34 @@ class ChannelView extends StatelessWidget {
 
                 return ListView(
                   scrollDirection: Axis.vertical,
-                children: createListOfChannels(snapshot.data, context),
+                  children: createListOfChannels(snapshot.data, context),
                 );
               },
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Future<List<Channel>> getChannels(BuildContext context) async {
+    final streamchat = StreamChat.of(context);
+    //Filter by user id
+    final filter = {
+      "type": "mobile",
+      "members": ["${streamchat.user.id}"],
+    };
+    //Sort for last message at channel
+    final sort = [
+      SortOption(
+        "last_message_at",
+        direction: SortOption.DESC,
+      ),
+    ];
+
+    return await streamchat.client.queryChannels(
+      filter: filter,
+      sort: sort,
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:chat_stream/pages/ChatPage.dart';
+import 'package:chat_stream/pages/channelPage.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:provider/provider.dart';
@@ -62,14 +62,17 @@ class CustomButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Material(
-        color: Colors.lightBlue[900],
+        color: Colors.lightBlue[700],
         elevation: 6.0,
         borderRadius: BorderRadius.circular(30.0),
         child: MaterialButton(
           onPressed: onPressed,
           minWidth: 200.0,
           height: 45.0,
-          child: Text(text),
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );
@@ -79,9 +82,8 @@ class CustomButton extends StatelessWidget {
 List<Widget> createListOfChannels(List<Channel> channels, context) {
   final provider = Provider.of<ChatModel>(context);
 
-
+  // convert to list to gain access to the index and make deletion more reliable.
   return channels
-      // convert to list to gain access to the index and make deletion more reliable.
       .asMap()
       .map((idx, chan) => MapEntry(
           idx,
@@ -92,8 +94,7 @@ List<Widget> createListOfChannels(List<Channel> channels, context) {
             title: Text(
               "Channel Title: ${chan.cid.replaceFirstMapped("mobile:", (match) => "")}",
             ),
-            subtitle:
-            Text("Last Message: ${chan.lastMessageAt}"),
+            subtitle: Text("Last Message: ${chan.lastMessageAt}"),
             //trailing: Text("Peers: ${chan.state.members.length}"),
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
@@ -102,22 +103,21 @@ List<Widget> createListOfChannels(List<Channel> channels, context) {
             onLongPress: () async {
               // remove channel from list.
               channels.removeAt(idx);
-            provider.currentChannel = chan;
-            await chan.delete();
+              provider.currentChannel = chan;
+              await chan.delete();
             },
             onTap: () async {
-           // remove channel from list.
+              // remove channel from list.
 
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => StreamChannel(
-                    child: ChatPage(),
+                    child: ChannelPage(),
                     channel: chan,
                   ),
                 ),
               );
             },
-
           )))
       .values
       .toList();

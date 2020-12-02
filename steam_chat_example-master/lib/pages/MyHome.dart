@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:chat_stream/model.dart';
 import 'package:chat_stream/utils.dart';
-import 'package:chat_stream/Class/sesion.dart';
-import 'package:chat_stream/pages/ChannelView.dart';
+import 'package:chat_stream/Class/session.dart';
+import 'package:chat_stream/pages/channelListPage.dart';
 
 //MyHomePage gets the username of every user.
 
@@ -43,73 +43,69 @@ class MyHome extends StatelessWidget {
           CustomButton(
             onPressed: () async {
               if (_formKey.currentState.validate()) {
-                final user = _controller.value.text;
+                final userName = _controller.value.text;
                 final client = provider.client;
 
-                //FOUR RESIDENTS WERE CREATED TO MAKE EXAMPLES
+                //region Create Residents
 
-                final resident1=new Resident();
-                resident1.NickName="Dad";
-                resident1.userId="idesme";
-                resident1.Image="https://pickaface.net/gallery/avatar/unr_grandpa_180927_0611_13iq.png";
+                final resident2 = new Resident();
+                resident2.nickName = "Gina";
+                resident2.userId = "idesme2";
+                resident2.imageUrl =
+                    "https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png";
 
+                final resident3 = new Resident();
+                resident3.nickName = "Bob";
+                resident3.userId = "idchris123";
+                resident3.imageUrl =
+                    "https://thumbs.dreamstime.com/b/grandfather-avatar-character-icon-illustration-design-84942735.jpg";
 
-                final resident2=new Resident();
-                resident2.NickName="Gina";
-                resident2.userId="idesme";
-                resident2.Image="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png";
+                final resident4 = new Resident();
+                resident4.nickName = "Mary";
+                resident4.userId = "idarturo";
+                resident4.imageUrl =
+                    "https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1807/yupiramos180788706.jpg";
 
-                final resident3=new Resident();
-                resident3.NickName="Bob";
-                resident3.userId="idchris123";
-                resident3.Image="https://thumbs.dreamstime.com/b/grandfather-avatar-character-icon-illustration-design-84942735.jpg";
+                final resident5 = new Resident();
+                resident5.nickName = "Anne";
+                resident5.userId = "idchdsz123";
+                resident5.imageUrl =
+                    "https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1807/yupiramos180788706.jpg";
 
-                final resident4=new Resident();
-                resident4.NickName="Mary";
-                resident4.userId="idarturo";
-                resident4.Image="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1807/yupiramos180788706.jpg";
+                final residents = List<Resident>();
+                residents.add(resident2);
+                residents.add(resident3);
+                residents.add(resident4);
+                residents.add(resident5);
 
-                final resident5=new Resident();
-                resident5.NickName="Anne";
-                resident5.userId="idchdsz123";
-                resident5.Image="https://images.assetsdelivery.com/compings_v2/yupiramos/yupiramos1807/yupiramos180788706.jpg";
+                //endregion
 
-                final Residents= List<Resident>();
-                Residents.add(resident1);
-                Residents.add(resident2);
-                Residents.add(resident3);
-                Residents.add(resident4);
-                Residents.add(resident5);
+                // User user2 = new User(id: "idDad", extraData: {
+                //   "name": "Dad",
+                // });
 
-                User user2=new User(
-                  id: "idDad",
-                  extraData:{
-                    "name": "Dad",
-                  }
-                );
+                // final currentUser = new Session();
+                // currentUser.userId = "id$userName";
 
+                final userId = "id$userName";
 
-
-                final currentUser=new Sesion();
-                currentUser.userId="id$user";
-
-              final u=  await client.setUserWithProvider(
+                await client.setUserWithProvider(
                   User(
-                    id: currentUser.userId,
+                    id: userId,
                     extraData: {
-                      "name": "$user",
+                      "name": "$userName",
                       "image": "https://picsum.photos/100/100",
                     },
                   ),
                 );
 
-
-
-
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (_) => StreamChat(
-                      child: ChannelView(residents: Residents, user: u, user2: user2,),
+                      child: ChannelListPage(
+                        residents: residents,
+                        // user2: user2,
+                      ),
                       client: client,
                     ),
                   ),
