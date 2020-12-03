@@ -21,10 +21,11 @@ class ContactsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[800],
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {
-          Navigator.of(context).pop();
-
-        }),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         title: Text("Contacts"),
         actions: [IconButton(icon: Icon(Icons.search), onPressed: () {})],
       ),
@@ -54,11 +55,15 @@ class ContactsPage extends StatelessWidget {
 
                   //channel.addMembers(channel.state.members, Message(user: streamchat.client.state.user, text: "hi"));
 
-                  // User temp = User(id: residents[index].userId,
-                  //     extraData: {"name": "${residents[index].nickName}",
-                  //       "image": "${residents[index].imageUrl}",});
-                  //
-                  // streamchat.client.setUser(temp, residents[index].token);
+                  User temp =
+                      User(id: "id${residents[index].nickName}", extraData: {
+                    "name": "${residents[index].nickName}",
+                    "image": "${residents[index].imageUrl}",
+                  },
+                  role: 'admin',
+                  );
+
+                  //streamchat.client.setGuestUser(temp);
 
                   print(
                       '_ContactsPage_TAG:StreamChatId: ${streamchat.user.id}');
@@ -72,8 +77,6 @@ class ContactsPage extends StatelessWidget {
                       "${residents[index].residentId}"
                     ],
                   });
-
-
 
                   //final member = channel.state.members;
 

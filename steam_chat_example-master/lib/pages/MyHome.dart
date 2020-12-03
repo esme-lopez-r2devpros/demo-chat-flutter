@@ -86,11 +86,12 @@ class MyHome extends StatelessWidget {
                     "https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg",
                     token: "asdf6");
 
-                // final resident6 = new Resident();
-                // resident5.nickName = "lauro123";
-                // resident5.residentId = "idlauro123";
-                // resident5.imageUrl ="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg";
-                // resident5.token = "asdf6";
+                final resident6 = new Resident(
+                    nickName: "uriel",
+                    residentId: "iduriel",
+                    imageUrl:
+                    "https://www.lacasadelosangeles.com.mx/wp-content/uploads/2016/10/6-1.jpg",
+                    token: "asdf6");
 
                 final residents = List<Resident>();
                 residents.add(resident1);
@@ -98,6 +99,7 @@ class MyHome extends StatelessWidget {
                 residents.add(resident3);
                 residents.add(resident4);
                 residents.add(resident5);
+                residents.add(resident6);
 
                 //endregion
 
