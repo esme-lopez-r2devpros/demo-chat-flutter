@@ -1,14 +1,14 @@
 import 'package:chat_stream/pages/contactsPage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-import 'package:chat_stream/model.dart';
 import 'package:chat_stream/utils.dart';
-import 'package:chat_stream/Class/session.dart';
+import 'package:chat_stream/utils/resident.dart';
 
 class ChannelListPage extends StatelessWidget {
-  final TextEditingController _controller = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  static String tag = "ChannelListPage";
+
+  // final TextEditingController _controller = TextEditingController();
+  // final _formKey = GlobalKey<FormState>();
 
   final channels = List<Channel>();
   final List<Resident> residents;
@@ -17,7 +17,6 @@ class ChannelListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //final user = streamchat.user;
 
     // final client = streamchat.client;
@@ -38,9 +37,8 @@ class ChannelListPage extends StatelessWidget {
               icon: Icon(Icons.add),
               onPressed: () {
                 Route route = MaterialPageRoute(
-                    builder: (bc) => ContactsPage(
-                        residents: this.residents));
-                Navigator.of(context).pushReplacement(route);
+                    builder: (bc) => ContactsPage(residents: this.residents));
+                Navigator.of(context).push(route);
               })
         ],
       ),
@@ -57,7 +55,6 @@ class ChannelListPage extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   );
                 }
-
                 // clear list to avoid duplicates
                 channels.clear();
                 // repopulate list
@@ -79,24 +76,32 @@ class ChannelListPage extends StatelessWidget {
     );
   }
 
-  Future<List<Channel>> getChannels(BuildContext context) async {
-    final streamchat = StreamChat.of(context);
-    //Filter by user id
-    final filter = {
-      "type": "mobile",
-      "members": ["${streamchat.user.id}"],
-    };
-    //Sort for last message at channel
-    final sort = [
-      SortOption(
-        "last_message_at",
-        direction: SortOption.DESC,
-      ),
-    ];
+}
 
-    return await streamchat.client.queryChannels(
-      filter: filter,
-      sort: sort,
-    );
-  }
+
+Future<List<Channel>> getChannels(BuildContext context) async {
+  final streamchat = StreamChat.of(context);
+  //Filter by user id
+
+  print('_ChannelListPage_TAG: getChannel():${streamchat.user.id}');
+
+  final filter = {
+    "type": "mobile",
+    "members": {
+      "\$in": [streamchat.user.id]
+    }
+  };
+
+  //Sort for last message at channel
+  final sort = [
+    SortOption(
+      "last_message_at",
+      direction: SortOption.DESC,
+    ),
+  ];
+
+  return await streamchat.client.queryChannels(
+    filter: filter,
+    sort: sort,
+  );
 }

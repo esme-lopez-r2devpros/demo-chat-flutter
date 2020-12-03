@@ -2,10 +2,10 @@ import 'package:chat_stream/pages/channelPage.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:provider/provider.dart';
-
 import 'package:chat_stream/model.dart';
 
-import 'main.dart';
+import 'utils/session.dart';
+
 
 class CustomForm extends StatelessWidget {
   final String hintText;
@@ -92,9 +92,11 @@ List<Widget> createListOfChannels(List<Channel> channels, context) {
 
             key: UniqueKey(),
             title: Text(
-              "Channel Title: ${chan.cid.replaceFirstMapped("mobile:", (match) => "")}",
+              //"${chan.cid.replaceFirstMapped("mobile:", (match) => "")}",
+              "${chan.state.members.firstWhere((element) => element.user.name != Session.nickname).user.name}",
             ),
-            subtitle: Text("Last Message: ${chan.lastMessageAt}"),
+            //${chan.state.messages.last.text}
+            subtitle: Text("Last Message: No sé"),
             //trailing: Text("Peers: ${chan.state.members.length}"),
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
@@ -108,7 +110,7 @@ List<Widget> createListOfChannels(List<Channel> channels, context) {
             },
             onTap: () async {
               // remove channel from list.
-
+              print('_Utils_TAG: createListOfChannels: ${chan.id}');
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => StreamChannel(

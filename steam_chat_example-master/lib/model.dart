@@ -1,3 +1,4 @@
+import 'package:chat_stream/utils/session.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:start_jwt/json_web_token.dart';
@@ -39,6 +40,9 @@ Future<String> provider(String id) async {
   };
 
   var j=  jwt.encode(payload);
+  Session.token = j;
+  Session.saveData();
+
   return j;
 
 }

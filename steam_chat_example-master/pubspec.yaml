@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
+  shared_preferences:
   flutter:
     sdk: flutter
   intl: ^0.16.1
